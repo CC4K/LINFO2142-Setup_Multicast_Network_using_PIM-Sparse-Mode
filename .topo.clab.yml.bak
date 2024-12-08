@@ -64,7 +64,7 @@ topology:
       sysctls:
         net.ipv6.conf.all.forwarding: 0
       exec:
-        - ip -6 addr add fc00:2142:10::1/64 dev eth-r10
+        - ip -6 addr add fc00:2142:a::1/64 dev eth-r10
   links:
     - endpoints: [ "h1:eth-r1", "r1:eth-h1"]
     - endpoints: [ "r1:eth-r3", "r3:eth-r1" ]
