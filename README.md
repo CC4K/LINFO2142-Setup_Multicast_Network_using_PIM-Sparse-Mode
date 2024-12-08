@@ -8,10 +8,10 @@
    ┌────┼ r1 ┼───┤ r3 ┼─────┐
    |    └────┘   └──┬─┘     |
 ┌──┴─┐  ┌────┐   ┌──┴─┐  ┌──┴─┐
-| r2 ┼──┤ r4 ┼───┼ r5 ┼──┤ r7 |
+| r2 ┼──┤ r4 ┼───┼ r5 ┼──┤ r6 |
 └──┬─┘  └────┘   └──┬─┘  └──┬─┘
 ┌──┴─┐  ┌────┐   ┌──┴─┐  ┌──┴─┐
-| r8 ┼──┤ r9 ┼───┼r10 ┼──┤r11 |
+| r7 ┼──┤ r8 ┼───┼ r9 ┼──┤r10 |
 └──┬─┘  └────┘   └────┘  └──┬─┘
    |                        |
 ┌──┴──┐                  ┌──┴──┐
@@ -51,9 +51,9 @@ show isis neighbor
 show isis database
 show isis route
 ip a
-(traceroute6 fc00:2142::3) => pas installé, équivalent ??
 show ipv6 mroute
 show ipv6 multicast
+ip -6 route
 
 Stream, save and read, tutorial :
 ---------------------------------
@@ -68,7 +68,7 @@ Server / h1 :
 ffmpeg -re -stream_loop -1 -i input.mp4 -c:a aac -b:a 128k -ar 44100 -f mpegts udp://[ff0a::1]:1234?pkt_size=188
 
 On VM :
-sudo docker cp d33a9b5734d0:output.mp4 output.mp4
+sudo docker cp 810d3beab2a2:output.mp4 output.mp4
               <container_id>
 On PC :
 Download and play !

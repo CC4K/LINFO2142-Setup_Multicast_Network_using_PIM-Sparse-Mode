@@ -12,6 +12,8 @@ docker exec -it clab-r4 vtysh -c "write memory"
 docker exec -it clab-r4 cat "/etc/frr/frr.conf" > ${SAVE_PATH}/r4/frr.conf
 docker exec -it clab-r5 vtysh -c "write memory"
 docker exec -it clab-r5 cat "/etc/frr/frr.conf" > ${SAVE_PATH}/r5/frr.conf
+docker exec -it clab-r6 vtysh -c "write memory"
+docker exec -it clab-r6 cat "/etc/frr/frr.conf" > ${SAVE_PATH}/r6/frr.conf
 docker exec -it clab-r7 vtysh -c "write memory"
 docker exec -it clab-r7 cat "/etc/frr/frr.conf" > ${SAVE_PATH}/r7/frr.conf
 docker exec -it clab-r8 vtysh -c "write memory"
@@ -20,5 +22,3 @@ docker exec -it clab-r9 vtysh -c "write memory"
 docker exec -it clab-r9 cat "/etc/frr/frr.conf" > ${SAVE_PATH}/r9/frr.conf
 docker exec -it clab-r10 vtysh -c "write memory"
 docker exec -it clab-r10 cat "/etc/frr/frr.conf" > ${SAVE_PATH}/r10/frr.conf
-docker exec -it clab-r11 vtysh -c "write memory"
-docker exec -it clab-r11 cat "/etc/frr/frr.conf" > ${SAVE_PATH}/r11/frr.conf

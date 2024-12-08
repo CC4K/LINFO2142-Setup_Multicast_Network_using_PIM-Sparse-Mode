@@ -27,6 +27,8 @@ topology:
       cmd: /etc/frr/startup.sh
     r5:
       cmd: /etc/frr/startup.sh
+    r6:
+      cmd: /etc/frr/startup.sh
     r7:
       cmd: /etc/frr/startup.sh
     r8:
@@ -34,8 +36,6 @@ topology:
     r9:
       cmd: /etc/frr/startup.sh
     r10:
-      cmd: /etc/frr/startup.sh
-    r11:
       cmd: /etc/frr/startup.sh
     h1:
       sysctls:
@@ -48,27 +48,27 @@ topology:
       sysctls:
         net.ipv6.conf.all.forwarding: 0
       exec:
-        - ip -6 addr add fc00:2142:8::1/64 dev eth-r8
+        - ip -6 addr add fc00:2142:7::1/64 dev eth-r7
     h3:
       image: host:latest
       sysctls:
         net.ipv6.conf.all.forwarding: 0
       exec:
-        - ip -6 addr add fc00:2142:11::1/64 dev eth-r11
+        - ip -6 addr add fc00:2142:10::1/64 dev eth-r10
   links:
     - endpoints: [ "h1:eth-r1", "r1:eth-h1"]
     - endpoints: [ "r1:eth-r3", "r3:eth-r1" ]
     - endpoints: [ "r1:eth-r2", "r2:eth-r1" ]
     - endpoints: [ "r2:eth-r4", "r4:eth-r2" ]
-    - endpoints: [ "r2:eth-r8", "r8:eth-r2" ]
+    - endpoints: [ "r2:eth-r7", "r7:eth-r2" ]
     - endpoints: [ "r3:eth-r5", "r5:eth-r3" ]
-    - endpoints: [ "r3:eth-r7", "r7:eth-r3" ]
+    - endpoints: [ "r3:eth-r6", "r6:eth-r3" ]
     - endpoints: [ "r4:eth-r5", "r5:eth-r4" ]
-    - endpoints: [ "r5:eth-r7", "r7:eth-r5" ]
-    - endpoints: [ "r5:eth-r10", "r10:eth-r5" ]
-    - endpoints: [ "r7:eth-r11", "r11:eth-r7" ]
+    - endpoints: [ "r5:eth-r6", "r6:eth-r5" ]
+    - endpoints: [ "r5:eth-r9", "r9:eth-r5" ]
+    - endpoints: [ "r6:eth-r10", "r10:eth-r6" ]
+    - endpoints: [ "r7:eth-r8", "r8:eth-r7" ]
     - endpoints: [ "r8:eth-r9", "r9:eth-r8" ]
     - endpoints: [ "r9:eth-r10", "r10:eth-r9" ]
-    - endpoints: [ "r10:eth-r11", "r11:eth-r10" ]
-    - endpoints: [ "r8:eth-h2", "h2:eth-r8"]
-    - endpoints: [ "r11:eth-h3", "h3:eth-r11"]
+    - endpoints: [ "r7:eth-h2", "h2:eth-r7"]
+    - endpoints: [ "r10:eth-h3", "h3:eth-r10"]

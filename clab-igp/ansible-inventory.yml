@@ -17,8 +17,6 @@ all:
           ansible_host: 
         clab-igp-r10:
           ansible_host: 
-        clab-igp-r11:
-          ansible_host: 
         clab-igp-r2:
           ansible_host: 
         clab-igp-r3:
@@ -26,6 +24,8 @@ all:
         clab-igp-r4:
           ansible_host: 
         clab-igp-r5:
+          ansible_host: 
+        clab-igp-r6:
           ansible_host: 
         clab-igp-r7:
           ansible_host: 
