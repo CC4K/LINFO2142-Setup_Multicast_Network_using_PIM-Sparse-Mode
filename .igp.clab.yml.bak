@@ -34,19 +34,19 @@ topology:
         net.ipv6.conf.all.forwarding: 0
       image: host:latest
       exec:
-        - ip addr add fc00:2142:1::1/64 dev eth-s1
+        - ip -6 addr add fc00:2142:1::1/64 dev eth-s1
     h2:
       image: host:latest
       sysctls:
         net.ipv6.conf.all.forwarding: 0
       exec:
-        - ip addr add fc00:2142:3::1/64 dev eth-s3
+        - ip -6 addr add fc00:2142:3::1/64 dev eth-s3
     h3:
       image: host:latest
       sysctls:
         net.ipv6.conf.all.forwarding: 0
       exec:
-        - ip addr add fc00:2142:5::1/64 dev eth-s5
+        - ip -6 addr add fc00:2142:5::1/64 dev eth-s5
   links:
     - endpoints: [ "h1:eth-s1", "s1:eth-h1"]
     - endpoints: [ "s1:eth-s2", "s2:eth-s1" ]

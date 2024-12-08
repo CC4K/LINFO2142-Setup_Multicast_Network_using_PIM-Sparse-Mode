@@ -29,6 +29,21 @@ ping fc00:2142:3::2
 ping fc00:2142:5::2
 
 
-ffmpeg -re -i video.mp4 -c copy -f mpegts udp://[ff00:0::0:0]:5555
-ffplay -i udp://[ff00:0::0:0]:5555 ???
+(
+// stream
+ffmpeg -re -stream_loop -1 -i video.mp4 -c:a aac -b:a 128k -ar 44100 -f mpegts udp://[ff0a::1]:1234?pkt_size=188
+)
 
+
+// server
+ffmpeg -re -i video.mp4 -f mpegts udp://[ff0a::1]:1234
+
+// client
+// save
+ffmpeg -i udp://@[ff0a::1]:1234 -aspect 1280:672 -c copy output.mp4
+// stream
+ffplay -i udp://[ff0a::1]:1234 -vf scale=1280x672
+
+
+// save video
+sudo docker cp ade3bf96a06a:output.mp4 output.mp4

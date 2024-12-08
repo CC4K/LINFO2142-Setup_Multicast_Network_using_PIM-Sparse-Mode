@@ -1,3 +1,4 @@
+#!/bin/bash
 
 SAVE_PATH="clab-igp"
 
