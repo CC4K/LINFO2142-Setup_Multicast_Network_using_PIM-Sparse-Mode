@@ -29,23 +29,23 @@ Note : it is recommended to view this project in VsCode using Remote Explorer ex
 ## Testing unicast connections with `ping` and `traceroute` :
 ### From h1, h2, h3 :
 ---------------------
-`ping fc00:2142::X`
+Routers: `ping fc00:2142::X`
 
-`ping fc00:2142:1::1`
+h1: `ping fc00:2142:1::1`
 
-`ping fc00:2142:7::1`
+h2: `ping fc00:2142:7::1`
 
-`ping fc00:2142:a::1`
+h3: `ping fc00:2142:a::1`
 
 ### From r1, r2, r3, r4...
 --------------------------
-`ping fc00:2142::X`
+Routers: `ping fc00:2142::X`
 
-`ping fc00:2142:1::2`
+h1: `ping fc00:2142:1::2`
 
-`ping fc00:2142:7::2`
+h2: `ping fc00:2142:7::2`
 
-`ping fc00:2142:a::2`
+h3: `ping fc00:2142:a::2`
 
 ## Testing multicast traffic by sending a video stream from the server h1 and recording it on a client h2 or h3 using `ffmpeg`
 ### Launch stream on server h1
