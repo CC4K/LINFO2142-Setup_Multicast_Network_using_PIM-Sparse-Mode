@@ -53,7 +53,9 @@ show isis route
 ip a
 show ipv6 mroute
 show ipv6 multicast
+show ipv6 pim rp-info
 ip -6 route
+
 
 Stream, save and read, tutorial :
 ---------------------------------
@@ -68,7 +70,7 @@ Server / h1 :
 ffmpeg -re -stream_loop -1 -i input.mp4 -c:a aac -b:a 128k -ar 44100 -f mpegts udp://[ff0a::1]:1234?pkt_size=188
 
 On VM :
-sudo docker cp 810d3beab2a2:output.mp4 output.mp4
+sudo docker cp 3b5512dd9253:output.mp4 output.mp4
               <container_id>
 On PC :
 Download and play !
