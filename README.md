@@ -1,33 +1,35 @@
 
 ```
-                       ┌─────┐         
-                       │  h2 │         
-                       └──┬──┘         
-               ┌────┐  ┌──┴─┐          
-            ┌──┼ S2 ┼──┤ S3 ┼──┐       
-            │  └────┘  └──┬─┘  │       
-┌──────┐ ┌──┼─┐           │  ┌─┼──┐
-│  h1  ├─┼ S1 │  ┌────────┘  │ S6 │
-└──────┘ └──┬─┘  │           └─┬──┘
-            │  ┌─┼──┐  ┌────┐  │       
-            └──┼ S4 ├──┼ S5 ┼──┘       
-               └────┘  └──┬─┘          
-                       ┌──┴──┐         
-                       │ h3  │         
-                       └─────┘         
+        ┌─────┐
+        │ h1  │
+        └──┬──┘
+           |
+        ┌──┴─┐   ┌────┐
+   ┌────┼ r1 ┼───┤ r3 ┼─────┐
+   |    └────┘   └──┬─┘     |
+┌──┴─┐  ┌────┐   ┌──┴─┐  ┌──┴─┐
+| r2 ┼──┤ r4 ┼───┼ r5 ┼──┤ r7 |
+└──┬─┘  └────┘   └──┬─┘  └──┬─┘
+┌──┴─┐  ┌────┐   ┌──┴─┐  ┌──┴─┐
+| r8 ┼──┤ r9 ┼───┼r10 ┼──┤r11 |
+└──┬─┘  └────┘   └────┘  └──┬─┘
+   |                        |
+┌──┴──┐                  ┌──┴──┐
+│ h2  │                  │ h3  │
+└─────┘                  └─────┘
 ```
 Pings :
 -------
 ==h1,2,3==
 ping fc00:2142::X
 ping fc00:2142:1::1
-ping fc00:2142:3::1
-ping fc00:2142:5::1
-==s1,2,3,4,5,6==
+ping fc00:2142:8::1
+ping fc00:2142:11::1
+==s1,2,3,4,5...==
 ping fc00:2142::X
 ping fc00:2142:1::2
-ping fc00:2142:3::2
-ping fc00:2142:5::2
+ping fc00:2142:8::2
+ping fc00:2142:11::2
 
 Stream cmds :
 -------------
@@ -51,6 +53,7 @@ show isis route
 ip a
 (traceroute6 fc00:2142::3) => pas installé, équivalent ??
 show ipv6 mroute
+show ipv6 multicast
 
 Stream, save and read, tutorial :
 ---------------------------------
@@ -65,7 +68,7 @@ Server / h1 :
 ffmpeg -re -stream_loop -1 -i input.mp4 -c:a aac -b:a 128k -ar 44100 -f mpegts udp://[ff0a::1]:1234?pkt_size=188
 
 On VM :
-sudo docker cp f4cf3d2f01c9:output.mp4 output.mp4
+sudo docker cp d33a9b5734d0:output.mp4 output.mp4
               <container_id>
 On PC :
 Download and play !

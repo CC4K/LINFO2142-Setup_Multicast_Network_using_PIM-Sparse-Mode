@@ -1,0 +1,74 @@
+name: igp
+
+topology:
+  defaults:
+    kind: linux
+    image: quay.io/frrouting/frr:10.1.1
+    network-mode: none
+    sysctls:
+      net.ipv6.conf.all.forwarding: 1
+    binds:
+      # FRR does not like "bind" file
+      # So nasty hack, mount frr.conf as readonly (ro) file.
+      # Then startup.sh will copy the ro frr.conf file into the
+      # RW frr.conf and finally FRR starts
+      - startup.sh:/etc/frr/startup.sh:ro
+      - daemons:/etc/frr/daemons
+      - vtysh.conf:/etc/frr/vtysh.conf
+      - __clabNodeDir__/frr.conf:/etc/frr/frr.ro.conf:ro
+  nodes:
+    r1:
+      cmd: /etc/frr/startup.sh
+    r2:
+      cmd: /etc/frr/startup.sh
+    r3:
+      cmd: /etc/frr/startup.sh
+    r4:
+      cmd: /etc/frr/startup.sh
+    r5:
+      cmd: /etc/frr/startup.sh
+    r7:
+      cmd: /etc/frr/startup.sh
+    r8:
+      cmd: /etc/frr/startup.sh
+    r9:
+      cmd: /etc/frr/startup.sh
+    r10:
+      cmd: /etc/frr/startup.sh
+    r11:
+      cmd: /etc/frr/startup.sh
+    h1:
+      sysctls:
+        net.ipv6.conf.all.forwarding: 0
+      image: host:latest
+      exec:
+        - ip -6 addr add fc00:2142:1::1/64 dev eth-r1
+    h2:
+      image: host:latest
+      sysctls:
+        net.ipv6.conf.all.forwarding: 0
+      exec:
+        - ip -6 addr add fc00:2142:8::1/64 dev eth-r8
+    h3:
+      image: host:latest
+      sysctls:
+        net.ipv6.conf.all.forwarding: 0
+      exec:
+        - ip -6 addr add fc00:2142:11::1/64 dev eth-r11
+  links:
+    - endpoints: [ "h1:eth-r1", "r1:eth-h1"]
+    - endpoints: [ "r1:eth-r3", "r3:eth-r1" ]
+    - endpoints: [ "r1:eth-r2", "r2:eth-r1" ]
+    - endpoints: [ "r2:eth-r4", "r4:eth-r2" ]
+    - endpoints: [ "r2:eth-r8", "r8:eth-r2" ]
+    - endpoints: [ "r3:eth-r5", "r5:eth-r3" ]
+    - endpoints: [ "r3:eth-r7", "r7:eth-r3" ]
+    - endpoints: [ "r4:eth-r5", "r5:eth-r4" ]
+    - endpoints: [ "r5:eth-r7", "r7:eth-r5" ]
+    - endpoints: [ "r5:eth-r10", "r10:eth-r5" ]
+    - endpoints: [ "r7:eth-r11", "r11:eth-r7" ]
+    - endpoints: [ "r8:eth-r9", "r9:eth-r8" ]
+    - endpoints: [ "r9:eth-r10", "r10:eth-r9" ]
+    - endpoints: [ "r10:eth-r11", "r11:eth-r10" ]
+    - endpoints: [ "r8:eth-h2", "h2:eth-r8"]
+    - endpoints: [ "r11:eth-h3", "h3:eth-r11"]
