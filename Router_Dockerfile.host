@@ -1,4 +1,4 @@
-FROM alpine:3.20
+FROM quay.io/frrouting/frr:10.2.0
 
 RUN apk update && \
     apk upgrade --no-cache --available && \
@@ -6,8 +6,6 @@ RUN apk update && \
                        iproute2 iputils mtr net-tools procps-ng \
                        openssl perl-net-telnet tcpdump tcptraceroute \
                        wget iperf iperf3 tshark smokeping tini nmap ffmpeg ffplay ufw
-
-copy input.mp4 input.mp4
 
 ENTRYPOINT [ "/sbin/tini", "--" ]
 CMD [ "/usr/bin/tail", "-f" , "/dev/null" ]

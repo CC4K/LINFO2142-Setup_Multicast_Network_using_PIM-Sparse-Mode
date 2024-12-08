@@ -18,24 +18,34 @@ topology:
       - __clabNodeDir__/frr.conf:/etc/frr/frr.ro.conf:ro
   nodes:
     r1:
+      image: router:latest
       cmd: /etc/frr/startup.sh
     r2:
+      image: router:latest
       cmd: /etc/frr/startup.sh
     r3:
+      image: router:latest
       cmd: /etc/frr/startup.sh
     r4:
+      image: router:latest
       cmd: /etc/frr/startup.sh
     r5:
+      image: router:latest
       cmd: /etc/frr/startup.sh
     r6:
+      image: router:latest
       cmd: /etc/frr/startup.sh
     r7:
+      image: router:latest
       cmd: /etc/frr/startup.sh
     r8:
+      image: router:latest
       cmd: /etc/frr/startup.sh
     r9:
+      image: router:latest
       cmd: /etc/frr/startup.sh
     r10:
+      image: router:latest
       cmd: /etc/frr/startup.sh
     h1:
       sysctls:
