@@ -66,61 +66,23 @@ ping fc00:2142:a::
 ```
 
 
-<!--
-
-## Testing multicast traffic by sending a video stream from the server h1 and recording it on client h2 using `ffmpeg`
-### Launch stream on server h1
+## Launch a stream on the server h1, record it on client h2 and play it on your physical computer
+### 1. Run the automated script for streaming and recording :
 ```
-ffmpeg -re -stream_loop -1 -i input.mp4 -c:a aac -b:a 128k -ar 44100 -f mpegts udp://[ff0a::1]:1234?pkt_size=188
-```
-### Connect to stream on client and record it
-```
-ffmpeg -i udp://@[ff0a::1]:1234 -aspect 1280:672 -c copy output.mp4
-```
-### Connect to stream on client and watch it (no screen though...)
-```
-ffplay -i udp://[ff0a::1]:1234 -vf scale=1280x672
+sudo ./stream_and_record.sh
 ```
 
--->
-
-
-
-## Step by step tutorial to launch a stream on the server h1, record it on client h2 and play it on your computer (open multiple terminals)
-### 1. Connect to server h1 in a terminal :
+### 2. Download the video output from this folder to your physical computer using sftp or VSCode Remote-SSH in order to watch it :
+### -> VSCode Remote-SSH : right-click the video file and save it
+### -> sftp (saves the file in your user folder) :
 ```
-sudo docker exec -it clab-igp-h1 bash
+sftp vm
+sftp> get setup_multicast_using_PIM-SM/output.mp4
 ```
 
-### 2. Connect to client h2 in another terminal :
-```
-sudo docker exec -it clab-igp-h2 bash
-```
+### 3. Open `output.mp4` with your video player (you might need to install MMPEG-2 codec to read it)
 
-### 3. Subscribe the client h2 to the stream and save the stream to mp4 :
-```
-ffmpeg -i udp://@[ff0a::1]:1234 -c copy output.mp4
-```
-
-### 4. Launch the stream on server h1 :
-```
-ffmpeg -re -stream_loop -1 -i input.mp4 -c:a aac -b:a 128k -ar 44100 -f mpegts udp://[ff0a::1]:1234?pkt_size=188
-```
-
-### 5. After ~50 seconds you can cut the subscription and the stream using `Ctrl+C`
-
-### 6. Copy the .mp4 from client h2 back to the VM / project root
-```
-sudo docker cp a26f88586f31:output.mp4 output.mp4
-               ^           ^
-               |           |
-           <client_container_id> (`docker ps -a` to get id of all containers)
-```
-### 7. If you are using Remote Explorer in VsCode you can simply download the `output.mp4` video file to your computer to read it
-
-### 8. Open `output.mp4` with your video player (you might need to install MMPEG-2 codec)
-
-### 9. Enjoy the video !
+### 4. Enjoy the video !
 
 
 
