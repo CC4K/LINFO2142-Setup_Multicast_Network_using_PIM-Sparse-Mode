@@ -1,5 +1,7 @@
 #!/bin/bash -xe
 
+sudo clab destroy
+
 [[ "$(command -v docker)" ]] || { echo "docker is not installed" 1>&2 ; exit 1; }
 [[ "$(command -v clab)" ]] || { echo "clab is not installed" 1>&2 ; exit 1; }
 
