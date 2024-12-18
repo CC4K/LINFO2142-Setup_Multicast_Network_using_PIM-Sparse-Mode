@@ -6,7 +6,6 @@ docker exec clab-igp-h2 bash -c "rm *.mp4" 2> /dev/null
 # launch stream on server h1
 echo -e "starting stream..."
 docker exec -d clab-igp-h1 bash -c "ffmpeg -re -stream_loop -1 -i input.mp4 -c:a aac -b:a 128k -ar 44100 -f mpegts udp://[ff0a::1]:1234?pkt_size=188"
-PIDh1=$!
 echo -e "stream started !\n"
 
 # subscribe to stream and record on h2
