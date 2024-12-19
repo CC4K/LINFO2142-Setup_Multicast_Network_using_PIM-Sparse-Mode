@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# delete preexisting video files on h2
+# delete preexisting video files
+rm output.mp4 2> /dev/null
 docker exec clab-igp-h2 bash -c "rm *.mp4" 2> /dev/null
 
 # launch stream on server h1
@@ -14,7 +15,7 @@ docker exec -d clab-igp-h2 bash -c "ffmpeg -i udp://@[ff0a::1]:1234 -c copy outp
 echo -e "watching stream !"
 
 # watching stream for N seconds
-N=42
+N=16
 for i in $(seq 1 $((2*N))); do
     sleep 0.5
     echo -n "."
@@ -30,8 +31,14 @@ docker exec clab-igp-h1 bash -c "pkill -f ffmpeg"
 
 # download recordings of all selected clients
 IDh2=$(docker ps -a | grep "clab-igp-h2" | awk '{print $1}')
-docker cp $IDh2:output.mp4 output.mp4 > /dev/null
-echo -e "video stream was successfully saved locally !\nplease save the video to your physical computer using sftp or VSCode Remote-SSH in order to watch it"
+docker cp $IDh2:output.mp4 output.mp4 2> /dev/null
+
+SUCCESS=$(ls | grep "output.mp4")
+if [[ $SUCCESS == "output.mp4" ]]; then
+    echo -e "video stream was successfully saved locally !\nplease save the video to your physical computer using sftp or VSCode Remote-SSH in order to watch it"
+else
+    echo -e "error : nothing was streamed"
+fi
 
 # notes :
 # ça marche pr h2 :D

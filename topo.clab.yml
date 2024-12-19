@@ -12,9 +12,9 @@ topology:
       # So nasty hack, mount frr.conf as readonly (ro) file.
       # Then startup.sh will copy the ro frr.conf file into the
       # RW frr.conf and finally FRR starts
-      - startup.sh:/etc/frr/startup.sh:ro
-      - daemons:/etc/frr/daemons
-      - vtysh.conf:/etc/frr/vtysh.conf
+      - startup_files/startup.sh:/etc/frr/startup.sh:ro
+      - startup_files/daemons:/etc/frr/daemons
+      - startup_files/vtysh.conf:/etc/frr/vtysh.conf
       - __clabNodeDir__/frr.conf:/etc/frr/frr.ro.conf:ro
   nodes:
     r1:

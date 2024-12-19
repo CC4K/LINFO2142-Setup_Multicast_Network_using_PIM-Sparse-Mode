@@ -7,7 +7,7 @@ RUN apk update && \
                        openssl perl-net-telnet tcpdump tcptraceroute \
                        wget iperf iperf3 tshark smokeping tini nmap ffmpeg ffplay ufw
 
-copy input.mp4 input.mp4
+copy startup_files/input.mp4 input.mp4
 
 ENTRYPOINT [ "/sbin/tini", "--" ]
 CMD [ "/usr/bin/tail", "-f" , "/dev/null" ]
