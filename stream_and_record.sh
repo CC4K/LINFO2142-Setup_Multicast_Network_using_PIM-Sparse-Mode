@@ -1,25 +1,31 @@
 #!/bin/bash
 
-# usage :
-# ./stream_and_record.sh <server> <client> <duration(optional)>
-# example usage :
-# ./stream_and_record.sh h1 h2 10
-
-
 # check if exactly two arguments are provided
 if [[ $# -lt 2 ]]; then
     echo "error: exactly two arguments are required"
+    echo "> usage :"
+    echo "./stream_and_record.sh <server> <client> <duration(optional)>"
+    echo "> example usage :"
+    echo "./stream_and_record.sh h1 h2 10"
     exit 1
 fi
 # check if the first argument is a server (h1 or h4)
 if [[ "$1" != "h1" && "$1" != "h4" ]]; then
     echo "error: $1 is not a server"
+    echo "> usage :"
+    echo "./stream_and_record.sh <server> <client> <duration(optional)>"
+    echo "> example usage :"
+    echo "./stream_and_record.sh h1 h2 10"
     exit 1
 fi
 server="$1"
 # check if the second argument is a client (h2 or h3)
 if [[ "$2" != "h2" && "$2" != "h3" ]]; then
     echo "error: $2 is not a client"
+    echo "> usage :"
+    echo "./stream_and_record.sh <server> <client> <duration(optional)>"
+    echo "> example usage :"
+    echo "./stream_and_record.sh h1 h2 10"
     exit 1
 fi
 client="$2"
@@ -27,6 +33,10 @@ if [[ $# -eq 3 ]]; then
     # Check if the third argument is a number > 5
     if ! [[ "$3" =~ ^[0-9]+$ ]] || [[ "$3" -le 5 ]]; then
         echo "error: third argument must be > 5"
+        echo "usage :"
+        echo "./stream_and_record.sh <server> <client> <duration(optional)>"
+        echo "example usage :"
+        echo "./stream_and_record.sh h1 h2 10"
         exit 1
     fi
     N="$3"

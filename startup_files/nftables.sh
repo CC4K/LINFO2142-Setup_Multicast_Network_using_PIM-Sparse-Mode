@@ -45,8 +45,8 @@ nft add rule inet filter input ip6 daddr ff06::178/127 accept
 
 nft add rule inet filter output ip6 saddr fc00:2142:1::1 ip6 daddr ff06::178/127 accept
 nft add rule inet filter output ip6 saddr fc00:2142:1::2 ip6 daddr ff06::178/127 accept
-nft add rule inet filter input ip6 saddr fc00:2142:1::1 ip6 daddr ff06::178/127 accept
-nft add rule inet filter input ip6 saddr fc00:2142:1::2 ip6 daddr ff06::178/127 accept
+#nft add rule inet filter output ip6 saddr fc00:2142:6::1 ip6 daddr ff06::178/127 drop
+#nft add rule inet filter output ip6 saddr fc00:2142:6::2 ip6 daddr ff06::178/127 drop
 
 nft add rule inet filter output ct state established,related accept
 nft add rule ip filter output drop
