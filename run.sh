@@ -10,6 +10,7 @@ sudo docker build -t router:latest -f startup_files/router.dockerfile .
 
 sudo clab deploy
 
-
-## sender: iperf -c ff08:2142::56 --ipv6_domain -u -T 32 -t 0 -i 1
-##   recv: iperf -s --ipv6_domain -u -B [ff08:2142::56] -i 1
+# activate firewalls
+sudo ./startup_files/execute_nftables.sh
+# start checking when the network is ready
+sudo ./startup_files/network_ready.sh

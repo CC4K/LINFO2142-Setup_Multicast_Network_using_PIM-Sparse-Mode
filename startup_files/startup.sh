@@ -14,3 +14,5 @@ chown frr:frr "${FRR_CONF}"
 
 # NOW start frr
 ${DOCKER_START}
+
+exit 0

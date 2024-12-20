@@ -13,6 +13,8 @@ all:
           ansible_host: 
         clab-igp-h3:
           ansible_host: 
+        clab-igp-h4:
+          ansible_host: 
         clab-igp-r1:
           ansible_host: 
         clab-igp-r10:

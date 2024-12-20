@@ -2,7 +2,7 @@
 
 # check arguments
 if [ -z "$1" ]; then
-    echo "the first argument is required"
+    echo "error : missing argument"
     exit 1
 fi
 if [ -z "$2" ]; then
@@ -15,7 +15,8 @@ fi
 N=${1:1}
 container="clab-igp-$1"
 if [[ $1 == r* ]]; then
-    docker exec -it "$container" "$console_router" 2> /dev/null
+    sudo docker exec -it "$container" "$console_router"
 elif [[ $1 == h* ]]; then
-    docker exec -it "$container" bash 2> /dev/null
+    sudo docker exec -it "$container" bash
 fi
+exit 0

@@ -15,6 +15,7 @@ topology:
       - startup_files/startup.sh:/etc/frr/startup.sh:ro
       - startup_files/daemons:/etc/frr/daemons
       - startup_files/vtysh.conf:/etc/frr/vtysh.conf
+      - startup_files/nftables.sh:/etc/nftables.sh
       - __clabNodeDir__/frr.conf:/etc/frr/frr.ro.conf:ro
   nodes:
     r1:
@@ -64,7 +65,13 @@ topology:
       sysctls:
         net.ipv6.conf.all.forwarding: 0
       exec:
-        - ip -6 addr add fc00:2142:a::1/64 dev eth-r10
+        - ip -6 addr add fc00:2142:9::1/64 dev eth-r9
+    h4:
+      image: host:latest
+      sysctls:
+        net.ipv6.conf.all.forwarding: 0
+      exec:
+        - ip -6 addr add fc00:2142:6::1/64 dev eth-r6
   links:
     - endpoints: [ "h1:eth-r1", "r1:eth-h1"]
     - endpoints: [ "r1:eth-r3", "r3:eth-r1" ]
@@ -81,4 +88,5 @@ topology:
     - endpoints: [ "r8:eth-r9", "r9:eth-r8" ]
     - endpoints: [ "r9:eth-r10", "r10:eth-r9" ]
     - endpoints: [ "r7:eth-h2", "h2:eth-r7"]
-    - endpoints: [ "r10:eth-h3", "h3:eth-r10"]
+    - endpoints: [ "r9:eth-h3", "h3:eth-r9"]
+    - endpoints: [ "r6:eth-h4", "h4:eth-r6"]

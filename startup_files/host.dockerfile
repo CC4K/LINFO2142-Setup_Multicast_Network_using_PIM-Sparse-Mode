@@ -5,9 +5,10 @@ RUN apk update && \
     apk add --no-cache bash bind-tools busybox-extras curl \
                        iproute2 iputils mtr net-tools procps-ng \
                        openssl perl-net-telnet tcpdump tcptraceroute \
-                       wget iperf iperf3 tshark smokeping tini nmap ffmpeg ffplay ufw
+                       wget iperf iperf3 tshark smokeping tini nmap \
+                       ffmpeg ffplay ufw nftables
 
-copy startup_files/input.mp4 input.mp4
+COPY startup_files/input.mp4 input.mp4
 
 ENTRYPOINT [ "/sbin/tini", "--" ]
 CMD [ "/usr/bin/tail", "-f" , "/dev/null" ]
