@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "please wait a moment for the routers to find the Rendezvous Point"
+echo "Please wait a moment for the routers to find the Rendezvous Point"
 N=20
 while [[ "$N" -gt "0" ]]; do
     res=$(./network_check.sh | grep "not")
@@ -9,10 +9,10 @@ while [[ "$N" -gt "0" ]]; do
         echo "."
         ((N--))
         if [[ "$N" -eq "3" ]]; then
-            echo "nearly done"
+            echo "Nearly done"
         fi
     else
-        echo "✅ the network is ready !"
+        echo "✅ The network is ready !"
         exit 0
     fi
 done

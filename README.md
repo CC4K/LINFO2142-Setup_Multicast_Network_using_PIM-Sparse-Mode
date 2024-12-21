@@ -56,14 +56,12 @@ Run the script `./test_RP.sh` to verify that 'r2' does indeed take over 'r5' RP 
 
 ## Security against Rogue RP
 Our hosts can't be candidate bsr and can't receive candidate bsr advertisement from routers
-
 // TODO:
 
 
 
 ## Security agains Rogue sources
 We limited the authorized incoming hosts to the ones already registered in the network (h1) // TODO: +++
-
 // TODO: nft firewall
 
 ### Testing the protection against Rogue sources
@@ -75,31 +73,31 @@ We limited the authorized incoming hosts to the ones already registered in the n
 
 ### 1. Run the automated script for streaming and recording :
 ```
-sudo ./stream_and_record.sh
+./stream_and_record.sh [SERVER_NAME] [CLIENT_NAME] [DURATION (optional) and > 5]
 ```
-This will start a stream on the server, subscribe the h2 client to it, record a ~20 seconds video of the stream and save it to the project root.
-
-// TODO: wait time
+This will start a stream on the server `SERVER_NAME`, subscribe the client `CLIENT_NAME` to the stream, record the stream into a video during `DURATION` seconds (must be > 5 seconds) or 20 seconds by default and finally save it to the project root.
 
 ### 2. Download the video output from this folder to your physical computer :
-&rarr; Using VSCode Remote-SSH : right-click the video file and save it
-&rarr; Using sftp (saves the file in your user folder) :
+- Using VSCode Remote-SSH : right-click the video file and save it
+- Using sftp (saves the file in your user folder) :
 ```
 sftp vm
 sftp> get setup_multicast_using_PIM-SM/output.mp4
 ```
 
-### 3. Open `output.mp4` with your favorite video player (you might need to install MMPEG-2 codec to read it)
+### 3. Open the video with your favorite video player (you might need to install MMPEG-2 codec to read it)
 
 ### 4. Enjoy the video !
 
 
 
 ## Manual debugging commands for unicast and multicast and nft tables
-You can access any container using `./open.sh [CONTAINER] [COMMAND PROCESSOR (optional)]` (for more details use `./help.sh`).
+You can access any container using `./open.sh [CONTAINER] [INTERFACE (optional)]` (for examples use `./help.sh`).
+
 Note : to see multicast events on routers you need to first stream a video first !
 
 ### Testing unicast connections with `ping` or `traceroute`
+
 From any host/router towards any router X :
 ```
 ping fc00:2142::X
@@ -126,23 +124,25 @@ ping fc00:2142:6::
 ```
 nft list ruleset
 ```
-The entire list of implemented rules can also be seen in `/startup_files/nftables.sh`
+Alternatively the entire list of implemented rules can also be seen in `/startup_files/nftables.sh`
 
 
 ### Testing multicast on a router
 
-#### Show multicast route => to use only when a client has already joined the stream :
+#### Show multicast route and group address
+You must run a stream in parallel to see an output (you can run `./stream_and_record.sh` with a long enough duration)
 ```
 show ipv6 mroute
 ```
-#### Show how many packets were send and received through the network :
+#### Show how many packets and bytes passed through the router so far
 ```
 show ipv6 multicast
 ```
-#### Check who is considered the RP by a router :
+#### Check who is considered the RP by a router
 ```
 show ipv6 pim rp-info
 ```
+Alternatively you can simply run `./network_check.sh` to run this command over every router
 #### Check if the current candidate is the bsr (the one who distribute the information about the RP's)
 ```
 show ipv6 pim bsr candidate-bsr
@@ -153,6 +153,8 @@ show ipv6 pim bsr candidate-bsr
 show isis neighbor
 show isis database
 show isis route
+show ip pim neighbor
+show ipv6 pim bsr
 ip a
 ip -6 route
 ```
