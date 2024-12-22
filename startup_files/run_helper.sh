@@ -13,5 +13,6 @@ sudo clab deploy
 # activate firewalls
 echo "Please wait for firewall to deploy"
 sudo ./startup_files/execute_nftables.sh
+echo "Firewall deployed !"
 
 exit 0

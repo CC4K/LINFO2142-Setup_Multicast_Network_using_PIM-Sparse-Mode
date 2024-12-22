@@ -1,22 +1,25 @@
 #!/bin/bash
 
-exit 0
+echo "Please wait a moment for the routers to decide who is BSR and RP"
 
-echo "Please wait a moment for the routers to find the Rendezvous Point"
 N=20
-BSRcount=0
 while [[ "$N" -gt "0" ]]; do
-    res=$(./network_check.sh | grep "not")
-    if echo "$res" | grep -q "not"; then
-        sleep 4
+    # run network_check.sh and count the number of BSRs and RPs
+    output=$(./network_check.sh)
+    bsr_count=$(echo "$output" | grep -c "()" )
+    rp_count=$(echo "$output" | grep -c "<>" )
+    # check if there is exactly one BSR and one RP
+    if [[ $bsr_count -eq 1 && $rp_count -eq 1 ]]; then
+        echo "✅ The network is ready !"
+        exit 0
+    else
+        sleep 5
         echo "."
         ((N--))
         if [[ "$N" -eq "3" ]]; then
             echo "Nearly done"
         fi
-    else
-        echo "✅ The network is ready !"
-        exit 0
     fi
 done
+
 exit 1

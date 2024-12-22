@@ -1,6 +1,8 @@
 # Multicast using PIM-Sarse-Mode
 
-Note : it is recommended to view this project in VsCode using Remote Explorer extension if you are connecting via SSH, it makes it easier to download the video output and navigate config files
+Note 1 : Remember to use `sudo chmod 777 permissions.sh` and then run `./permissions.sh` to give execute permissions to all the scripts in the project
+
+Note 2 : It is recommended to view this project in VsCode using Remote Explorer extension if you are connecting via SSH, it makes it easier to download the video output and navigate config files
 
 
 ## Project objectives
@@ -9,7 +11,7 @@ The objective of this project was to create a lab environment using FRRouting th
 We also had to choose a central location for the network Rendezvous Point (RP) and deploy security measures to avoid Rogue Servers and RP to attack the network/disrupt it.
 
 <!-- TODO: chosen group prefix -->
-
+For our multicast group prefix, we chose fc06::178/127 because it was available among the official reserved ipv6 addresses for multicast properties.. 
 
 
 ## Network topology
@@ -50,6 +52,10 @@ We decided the Rendezvous Point should be at the crossroad of as many routers as
 
 Additionally we added r2 as a backup RP should r5 fail unexpectedly.
 
+
+### BSR location choice
+To ensure the stability of the Rendezvous Point advertisement and because of its proximity with the RendezVous Point, we gave priority to r4 to be the bsr. 
+
 ### Testing the backup Rendezvous Point
 Run the script `./test_RP.sh` to verify that 'r2' does indeed take over 'r5' RP duties in case of failure.
 In this test scenario we manually break 'r5' by shutting it down and checking which router is detected as RP by every router in the network.
@@ -63,17 +69,17 @@ Our hosts can't be candidate bsr and can't receive candidate bsr advertisement f
 
 ### Against Rogue Sources
 We limited the authorized incoming hosts to the ones already registered in the network (h1)
-To do so, for the messages to the multicast group range, we only allow h1. He's the only host able to stream.
+To do so, we only allow 'h1' to send messages to the multicast group range. He's the only host able to stream.
+This way, 'h4' who's trying to be a server, gets his stream to the multicast group rejected. 
 
 ### Testing the protection against Rogue sources
 We see that by running `./stream.sh`, h4 isn't authorized to stream to the multicast group. 
-
 
 ## Sending a video stream via multicast
 
 ### 1. Run the automated script for streaming and recording :
 ```
-./stream_and_record.sh [SERVER_NAME] [CLIENT_NAME] [DURATION (optional and > 5)]
+./stream.sh [SERVER_NAME] [CLIENT_NAME] [DURATION (optional and > 5)]
 ```
 This will start a stream on the server `SERVER_NAME`, subscribe the client `CLIENT_NAME` to the stream, record the stream into a video during `DURATION` seconds (must be > 5 seconds) or 20 seconds by default and finally save it to the project root.
 
@@ -139,7 +145,7 @@ ping fc00:2142:6::
 nft list ruleset
 ```
 Alternatively the entire list of implemented rules can also be seen in `/startup_files/nftables.sh`
-
+To prevent the firewall not taking into account some of the rules by mistake. If an error occurs, we relaunch the creation of the containers.
 
 ### Testing multicast on a router
 

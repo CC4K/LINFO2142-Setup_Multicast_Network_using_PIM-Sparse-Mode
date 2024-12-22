@@ -7,9 +7,9 @@ for router in ${array[@]}; do
         RPnumber="${RPaddress##*:}"
         res2=$(sudo docker exec clab-igp-$router vtysh -c "show ipv6 pim bsr" | grep "BSR_ELECTED")
         if echo "$res2" | grep -q "BSR_ELECTED"; then
-            echo "() $router is the BSR"
+            echo "() $router is BSR"
         elif echo "$router" | grep -q "r$RPnumber"; then
-            echo "<> $router is the RP"
+            echo "<> $router is RP"
         elif echo "$RPaddress" | grep -q "$RPnumber"; then
             echo "✅ $router found that the RP is r$RPnumber"
         else
