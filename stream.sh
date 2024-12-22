@@ -3,13 +3,15 @@
 # check if exactly two arguments are provided
 if [[ $# -lt 1 ]]; then
     echo "Error: At least one argument is required"
-    # TODO: Usage
+    echo "Usage: ./stream.sh [SERVER_NAME]"
+    echo "Type ./help.sh to see examples"
     exit 1
 fi
 # check if the first argument is a server (h1 or h4)
 if [[ "$1" != "h1" && "$1" != "h4" ]]; then
     echo "Error: $1 is not a server"
-    # TODO: Usage
+    echo "Usage: ./stream.sh [SERVER_NAME]"
+    echo "Type ./help.sh to see examples"
     exit 1
 fi
 server="$1"

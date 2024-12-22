@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# start containers
+# start containers and deploy firewalls
 sudo ./startup_files/run_helper.sh
 
 # check the firewall didn't mess up
@@ -11,5 +11,7 @@ if echo "$output" | grep "Operation not permitted"; then
     sudo ./startup_files/run_helper.sh
 fi
 
-# start checking when the network is ready
+# start checking when the routers have settled
 sudo ./startup_files/network_ready.sh
+
+exit 0

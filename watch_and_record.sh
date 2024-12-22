@@ -3,13 +3,15 @@
 # check if exactly two arguments are provided
 if [[ $# -lt 1 ]]; then
     echo "Error: At least one argument is required"
-    # TODO: Usage
+    echo "Usage: ./watch_and_record.sh [CLIENT_NAME] [DURATION (optional and > 5 seconds)]"
+    echo "Type ./help.sh to see examples"
     exit 1
 fi
 # check if the first argument is a client (h2 or h3)
 if [[ "$1" != "h2" && "$1" != "h3" ]]; then
     echo "Error: $1 is not a client"
-    # TODO: Usage
+    echo "Usage: ./watch_and_record.sh [CLIENT_NAME] [DURATION (optional and > 5 seconds)]"
+    echo "Type ./help.sh to see examples"
     exit 1
 fi
 client="$1"
@@ -17,7 +19,8 @@ if [[ $# -eq 2 ]]; then
     # Check if the second argument is a number > 5
     if ! [[ "$2" =~ ^[0-9]+$ ]] || [[ "$2" -le 5 ]]; then
         echo "Error: Second optional argument must be a duration > 5"
-        # TODO: Usage
+        echo "Usage: ./watch_and_record.sh [CLIENT_NAME] [DURATION (optional and > 5 seconds)]"
+        echo "Type ./help.sh to see examples"
         exit 1
     fi
     N="$2"

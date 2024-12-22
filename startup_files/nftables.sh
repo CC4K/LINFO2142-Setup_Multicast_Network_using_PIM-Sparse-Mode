@@ -1,13 +1,12 @@
 #!/bin/bash
 
-# cleanup just in case
+# cleanup eventual preexisting rules
 nft flush ruleset
 
-
+# start
 nft add table inet filter
 
 # input
-
 nft add chain inet filter input '{ type filter hook input priority 0; }'
 # Allow specific hosts to send packets
 for i in {1..9}; do
