@@ -46,7 +46,7 @@ echo -e "Starting stream on server $server..."
 sudo docker exec -d clab-igp-$server bash -c "ffmpeg -re -stream_loop -1 -i input.mp4 -c:a aac -b:a 128k -ar 44100 -f mpegts udp://[ff06::179]:50623?pkt_size=188"
 echo -e "Server $server started streaming !\n"
 # subscribe to stream and record on client
-echo -e "Client $client subscribing to stream..."
+echo -e "Client $client subscribing to the stream..."
 sudo docker exec -d clab-igp-$client bash -c "ffmpeg -i udp://@[ff06::179]:50623 -c copy output_$server-$client.mp4"
 echo -e "Client $client is watching the stream"
 # watching stream for N seconds
