@@ -76,6 +76,7 @@ This way, 'h4' who's trying to be a server, gets his stream to the multicast gro
 ### Testing the protection against Rogue sources
 Try running `./stream.sh h4`, and you will see that h4 does not have permission to start a stream to the multicast group.
 
+Sometimes it seems the firewall fails to deploy the rules in the right order. If the firewall seems faulty and you see that the stream from h1 returns mutltiple "Operation not permitted" errors you might have to restart the containers yourself with `./run.sh`.
 
 
 ## Project structure, scripts/commands and how to run them
@@ -98,12 +99,12 @@ Try running `./stream.sh h4`, and you will see that h4 does not have permission 
 │   ├── execute_nftables.sh
 │   ├── network_ready.sh
 │   ├── nftables.sh
-│   ├── run_helper.sh
 │   ├── save.sh
 │   ├── startup.sh
 ├── network_topology.png
 ├── topo.clab.yml
 ├── README.md
+├── README.pdf
 ├── help.sh
 ├── network_check.sh
 ├── open.sh
@@ -126,7 +127,7 @@ List of scripts available in this project :
         Gives execute permissions to all other bash scripts in the project
         Don't forget to first give permissions to this script with 'sudo chmod 777' before trying to run it
 > ./run.sh
-        Starts/restarts the containerlab then notifies the user when the firewall is deployed and the routers are ready to send multicast packets
+        Starts/restarts the containerlab then notifies the user when the firewall is deployed and the routers are ready to transmit multicast packets
 > ./open.sh
         Opens any container in the network
         Usage: ./open.sh [CONTAINER] [INTERFACE (optional)]
@@ -150,8 +151,18 @@ List of scripts available in this project :
 ```
 
 ### Startup_files background commands
-Theses scripts are used automatically when using `./run.sh` (except `save.sh` but we didn't consider it a user command). You can browse them to see how we run the containers, start the firewall using nftables, create the images for routers and hosts, etc
+These scripts are used automatically when using `./run.sh` (except `save.sh` but we didn't consider it a user command). You can browse them to see how we run the containers, start the firewall using nftables, create the images for routers and hosts, etc
 
+- `daemons` : This file tells the frr package which daemons to start (isis, pimd)
+- `vtysh.conf` : Configuration file for vtysh
+- `host.dockerfile` : Dockerfile defining the image for the host containers
+- `router.dockerfile` : Dockerfile defining the image for the router containers
+- `input.mp4` : Input video file to test streaming over the network
+- `execute_nftables.sh` : Launches `nftables.sh` containing the rules for the hosts firewalls
+- `network_ready.sh` : Script launching `network_check.sh` to tell the user when the network has settled and the routers are ready to transmit multicast packets
+- `nftables.sh` : Writes nftables rules for the hosts firewalls
+- `save.sh` : Script for saving frr configuration from the containers to the local save location in clab-igp/
+- `startup.sh` : Used to create the images when starting the containers
 
 
 ## Sending a video stream via multicast
@@ -161,7 +172,9 @@ The following shows more in details how to send a video stream from a server to 
 ```
 ./stream.sh [SERVER_NAME]
 ```
-This will start a stream on the server `SERVER_NAME` if it is a known server (in this case only h1 since h4 will be blocked by the firewall see above)
+This will start a stream on the server `SERVER_NAME` if it is a known server (in this case only h1 since h4 will be blocked by the firewall see above).
+
+Sometimes it seems the firewall fails to deploy the rules in the right order. If the firewall seems faulty and you see that the stream from h1 returns mutltiple "Operation not permitted" errors you might have to restart the containers yourself with `./run.sh`.
 
 ### Start watching and recording the video stream on clients of your choice
 

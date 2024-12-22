@@ -1,15 +1,23 @@
 #!/bin/bash
 
-# start containers and deploy firewalls
-sudo ./startup_files/run_helper.sh
+# destroy preexisting containers
+sudo clab destroy
 
-# check the firewall didn't mess up
-output=$(sudo docker exec clab-igp-h1 bash -c "ffmpeg -re -stream_loop -1 -i input.mp4 -c:a aac -b:a 128k -ar 44100 -f mpegts udp://[ff06::179]:50623?pkt_size=188" 2>&1)
-if echo "$output" | grep "Operation not permitted"; then
-    echo "Error with the firewall"
-    echo "Restarting containers..."
-    sudo ./startup_files/run_helper.sh
-fi
+# check if docker and containerlab are installed
+[[ "$(command -v docker)" ]] || { echo "docker is not installed" 1>&2 ; exit 1; }
+[[ "$(command -v clab)" ]] || { echo "clab is not installed" 1>&2 ; exit 1; }
+
+# build images
+sudo docker build -t host:latest -f startup_files/host.dockerfile .
+sudo docker build -t router:latest -f startup_files/router.dockerfile .
+
+# launch containers
+sudo clab deploy
+
+# activate firewalls
+echo "Please wait for firewall to deploy"
+sudo ./startup_files/execute_nftables.sh
+echo "Firewall deployed !"
 
 # start checking when the routers have settled
 sudo ./startup_files/network_ready.sh

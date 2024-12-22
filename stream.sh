@@ -29,8 +29,8 @@ if [[ "$server" == "h4" ]]; then
         echo "Error : Server h4 should not be allowed to stream !"
     fi
 else
-    sudo docker exec -d clab-igp-h1 bash -c "ffmpeg -re -stream_loop -1 -i input.mp4 -c:a aac -b:a 128k -ar 44100 -f mpegts udp://[ff06::179]:50623?pkt_size=188"
     echo "Server $server is now streaming !"
+    sudo docker exec clab-igp-h1 bash -c "ffmpeg -re -stream_loop -1 -i input.mp4 -c:a aac -b:a 128k -ar 44100 -f mpegts udp://[ff06::179]:50623?pkt_size=188"
 fi
 
 exit 0
