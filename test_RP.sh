@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # verifiy that r5 indeed RP
-echo "Currently detected Rendezvous Point should be r5 :"
+echo "Current Rendezvous Point should be r5 :"
 ./network_check.sh
 
 # shutdown r5
@@ -12,7 +12,7 @@ echo -e "\nr5 suddenly burst into flames !\nr2 should now take over its role as 
 sleep 7
 
 # verifiy that r2 is new RP
-echo "Currently detected Rendezvous Point should now be r2 :"
+echo "Current Rendezvous Point should now be r2 :"
 ./network_check.sh
 
 # repair r5 in a few seconds like a boss
@@ -27,7 +27,7 @@ echo -e "."
 sleep 6
 
 # verifiy that r5 is back to being RP
-echo "Currently detected Rendezvous Point should be r5 again :"
+echo "Current Rendezvous Point should be r5 again :"
 ./network_check.sh
 
 exit 0

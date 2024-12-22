@@ -58,16 +58,15 @@ In this test scenario we manually break 'r5' by shutting it down and checking wh
 ## Security policies
 ### Against Rogue RP
 Our hosts can't be candidate bsr and can't receive candidate bsr advertisement from routers
-<!-- TODO: -->
+<!-- TODO:  -->
 
 
 ### Against Rogue Sources
-We limited the authorized incoming hosts to the ones already registered in the network (h1) <!-- TODO:+++ -->
-<!-- TODO: nft firewall -->
+We limited the authorized incoming hosts to the ones already registered in the network (h1)
+To do so, for the messages to the multicast group range, we only allow h1. He's the only host able to stream.
 
 ### Testing the protection against Rogue sources
-<!-- TODO: try to send stream from h4 to a client => shouldn't work -->
-
+We see that by running `./stream.sh`, h4 isn't authorized to stream to the multicast group. 
 
 
 ## Sending a video stream via multicast
@@ -153,8 +152,11 @@ show ipv6 multicast
 show ipv6 pim rp-info
 ```
 Alternatively you can simply run `./network_check.sh` to run this command over every router
-#### Check if the current candidate is the bsr (the one who distribute the information about the RP's)
+#### Check which router is the bsr (the one who distribute the information about the RP's)
 ```
-show ipv6 pim bsr candidate-bsr
+show ipv6 pim bsr
 ```
+
+
+<!-- TODO: Project structure + all the scripts + startup_files -->
 

@@ -1,7 +1,10 @@
 #!/bin/bash
 
+exit 0
+
 echo "Please wait a moment for the routers to find the Rendezvous Point"
 N=20
+BSRcount=0
 while [[ "$N" -gt "0" ]]; do
     res=$(./network_check.sh | grep "not")
     if echo "$res" | grep -q "not"; then
