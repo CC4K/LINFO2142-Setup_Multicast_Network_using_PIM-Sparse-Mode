@@ -12,7 +12,9 @@ The objective of this project was to create a lab environment using FRRouting th
 
 We also had to choose a central location for the network Rendezvous Point (RP) and deploy security measures to avoid Rogue Servers and RP to attack the network/disrupt it.
 
-For our multicast group prefix, we chose fc06::178/127 that was shown as available among the official reserved IPv6 addresses for multicast available on the [IPv6 Multicast Address Space Registry](https://www.iana.org/assignments/ipv6-multicast-addresses/ipv6-multicast-addresses.xhtml).
+For our multicast group prefix, we chose ff06::178/127 that was shown as available among the official reserved IPv6 addresses for multicast available on the [IPv6 Multicast Address Space Registry](https://www.iana.org/assignments/ipv6-multicast-addresses/ipv6-multicast-addresses.xhtml).
+
+In our scripts for streaming and subscribing to streams we used ff06::179 to show that both ff06::178 and 179 are available (you can check on the aforementioned website).
 
 
 ## Network topology
@@ -100,7 +102,7 @@ Sometimes it seems the firewall fails to deploy the rules in the right order. If
 │   ├── network_ready.sh
 │   ├── nftables.sh
 │   ├── save.sh
-│   ├── startup.sh
+│   └── startup.sh
 ├── network_topology.png
 ├── topo.clab.yml
 ├── README.md
